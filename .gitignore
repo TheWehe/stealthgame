@@ -1,1 +1,4 @@
 .settings/org.eclipse.jdt.core.prefs
+/bin/
+/libs/
+/natives/
