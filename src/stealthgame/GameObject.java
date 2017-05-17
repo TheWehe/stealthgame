@@ -13,7 +13,7 @@ public class GameObject {
 	{
 		name = n;
 		dynamic = d;
-		position = p;
+		position = p.copy();
 		angle = a;
 	}
 	
