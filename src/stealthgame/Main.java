@@ -24,7 +24,7 @@ public class Main extends BasicGame
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
-		g.drawString("Howdy!", 10, 10);
+		
 	}
 
 	public static void main(String[] args)
@@ -32,8 +32,8 @@ public class Main extends BasicGame
 		try
 		{
 			AppGameContainer appgc;
-			appgc = new AppGameContainer(new Main("Simple Slick Game"));
-			appgc.setDisplayMode(1920, 1080, true);
+			appgc = new AppGameContainer(new Main("Stealth game"));
+			appgc.setDisplayMode(1024, 768, false);
 			appgc.start();
 		}
 		catch (SlickException ex)
