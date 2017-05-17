@@ -10,21 +10,30 @@ import org.newdawn.slick.SlickException;
 
 public class Main extends BasicGame
 {
+	private World world;
+	
 	public Main(String gamename)
 	{
 		super(gamename);
 	}
 
 	@Override
-	public void init(GameContainer gc) throws SlickException {}
+	public void init(GameContainer gc) throws SlickException
+	{
+		world = new World();
+	}
 
 	@Override
-	public void update(GameContainer gc, int i) throws SlickException {}
+	public void update(GameContainer gc, int i) throws SlickException
+	{
+		world.update((float)i / 1000.f);
+		world.postUpdate();
+	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
-		
+		world.render();
 	}
 
 	public static void main(String[] args)
