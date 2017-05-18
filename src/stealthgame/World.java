@@ -2,9 +2,12 @@ package stealthgame;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.geom.Vector2f;
+
 public class World {
 	private ArrayList<GameObject> staticGos;
 	private ArrayList<GameObject> dynamicGos;
+	private ArrayList<GameObject> physicalGos;
 	
 	public World()
 	{
@@ -25,13 +28,17 @@ public class World {
 			staticGos.add(go);
 		}
 		
-		
+		if(go.getAABB() != null)
+		{
+			physicalGos.add(go);
+		}
 	}
 	
 	public void removeGameObject(GameObject go)
 	{
 		staticGos.remove(go);
 		dynamicGos.remove(go);
+		physicalGos.remove(go);
 	}
 	
 	public ArrayList<GameObject> getDynamicGameObjects()
@@ -72,6 +79,11 @@ public class World {
 		}
 		
 		return r;
+	}
+	
+	public GameObject raycast(Vector2f pos, Vector2f dir, float len)
+	{
+		return null;
 	}
 	
 	public void update(float delta)

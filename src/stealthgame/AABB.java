@@ -9,6 +9,7 @@ public class AABB {
 	private Vector2f upperRight;
 	private Vector2f lowerLeft;
 	private Vector2f lowerRight;
+	private float radius;
 	
 	private void updatePoints()
 	{
@@ -16,6 +17,7 @@ public class AABB {
 		upperRight = new Vector2f(center.x + size.x / 2.f, center.y - size.y / 2.f);
 		lowerLeft = new Vector2f(center.x - size.x / 2.f, center.y + size.y / 2.f);
 		lowerRight = new Vector2f(center.x + size.x / 2.f, center.y + size.y / 2.f);
+		radius = center.sub(upperLeft).length();
 	}
 	
 	public AABB(Vector2f c, Vector2f s)
@@ -32,6 +34,11 @@ public class AABB {
 		        || other.upperRight.x < upperLeft.x
 		        || other.upperLeft.y > lowerLeft.y
 		        || other.lowerLeft.y < upperLeft.y);
+	}
+	
+	public boolean radiusIntersect(Vector2f p, float r)
+	{
+		return Math.pow(radius + r, 2) <= Math.pow((center.x - p.x), 2) + Math.pow((center.y - p.y), 2);
 	}
 	
 	public Vector2f checkCollision(AABB other)
