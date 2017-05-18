@@ -27,7 +27,5 @@ public class Crate extends GameObject {
 				size.x, size.y);
 		gfx.setColor(Color.pink);
 		gfx.fill(s);
-		gfx.setColor(Color.black);
-		gfx.draw(s);
 	}
 }

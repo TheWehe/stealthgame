@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -35,11 +36,21 @@ public class Main extends BasicGame
 		
 		world = new World();
 		
-		player = new Player("Player", new Vector2f(100, 200), playerImage);
+		Crate crate1 = new Crate("Crate1", new Vector2f(300, 300), new Vector2f(400, 400));
+		world.addGameObject(crate1);
+		Crate crate2 = new Crate("Crate2", new Vector2f(900, 550), new Vector2f(100, 150));
+		world.addGameObject(crate2);
+		
+		player = new Player("Player", new Vector2f(800, 300), playerImage);
 		world.addGameObject(player);
 		
-		Crate crate1 = new Crate("Crate1", new Vector2f(450, 400), new Vector2f(250, 250));
-		world.addGameObject(crate1);
+		Route route1 = new Route(1);
+		route1.addPoint(new Vector2f(550, 550));
+		route1.addPoint(new Vector2f(550, 50));
+		route1.addPoint(new Vector2f(50, 50));
+		route1.addPoint(new Vector2f(50, 550));
+		Guard guard1 = new Guard("Guard1", new Vector2f(900, 740), route1);
+		world.addGameObject(guard1);
 	}
 
 	@Override

@@ -41,7 +41,7 @@ public class GameObject {
 	
 	public void move(Vector2f v)
 	{
-		position = position.add(v);
+		position.add(v);
 	}
 	
 	public void setPosition(Vector2f p)
