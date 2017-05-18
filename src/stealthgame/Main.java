@@ -61,7 +61,7 @@ public class Main extends BasicGame implements InputProviderListener
 	@Override
 	public void update(GameContainer gc, int i) throws SlickException
 	{
-		this.updateInput();
+		this.updateInput((float)i / 1000.f);
 		world.update((float)i / 1000.f);
 		world.postUpdate();
 	}
@@ -74,23 +74,23 @@ public class Main extends BasicGame implements InputProviderListener
 	
 	
 	
-	private void updateInput()
+	private void updateInput(float delta)
 	{
 		if(this.inputs[0])
 		{
-			this.p.move(new Vector2f(0, -1));
+			this.p.moveUP(delta);
 		}
 		if(this.inputs[1])
 		{
-			this.p.move(new Vector2f(1, 0));
+			this.p.moveRIGHT(delta);
 		}
 		if(this.inputs[2])
 		{
-			this.p.move(new Vector2f(0, 1));
+			this.p.moveDOWN(delta);
 		}
 		if(this.inputs[3])
 		{
-			this.p.move(new Vector2f(-1, 0));
+			this.p.moveLEFT(delta);
 		}
 	}
 	
@@ -122,18 +122,22 @@ public class Main extends BasicGame implements InputProviderListener
 		if(c == this.walkup)
 		{
 			this.inputs[0] = false;
+			this.p.stop();
 		}
 		if(c == this.walkright)
 		{
 			this.inputs[1] = false;
+			this.p.stop();
 		}
 		if(c == this.walkdown)
 		{
 			this.inputs[2] = false;
+			this.p.stop();
 		}
 		if(c == this.walkleft)
 		{
 			this.inputs[3] = false;
+			this.p.stop();
 		}
 	}
 	
