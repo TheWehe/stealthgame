@@ -8,6 +8,7 @@ public class GameObject {
 	protected World world;
 	protected String name;
 	protected boolean dynamic;
+	protected AABB aabb;
 	
 	public GameObject(String n, boolean d, Vector2f p, float a)
 	{
@@ -15,6 +16,7 @@ public class GameObject {
 		dynamic = d;
 		position = p.copy();
 		angle = a;
+		aabb = null;
 	}
 	
 	public void update(float delta) {}
@@ -38,7 +40,7 @@ public class GameObject {
 	
 	public void move(Vector2f v)
 	{
-		position.add(v);
+		position = position.add(v);
 	}
 	
 	public void setPosition(Vector2f p)
@@ -69,5 +71,15 @@ public class GameObject {
 	public Vector2f getDirection()
 	{
 		return new Vector2f((float)Math.sin(angle), (float)-Math.cos(angle));
+	}
+	
+	public AABB getAABB()
+	{
+		return aabb;
+	}
+	
+	public void setAABB(AABB ab)
+	{
+		aabb = ab;
 	}
 }
