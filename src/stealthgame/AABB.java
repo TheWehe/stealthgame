@@ -45,71 +45,42 @@ public class AABB {
 	{
 		if(!intersects(other)) return null;
 		
-		float minimalDistance = Float.MAX_VALUE;
-		Vector2f penetrationVector = new Vector2f();
+		float smallestDist = Float.POSITIVE_INFINITY;
+		Vector2f penetrationDir = new Vector2f();
 		
-		// projektion auf x-achse
-		
-		// a links von b
-		if(upperRight.x < other.upperLeft.x)
+		float d = lowerLeft.y - other.upperLeft.y;
+		if(d < smallestDist)
 		{
-			float d = other.upperLeft.x - upperRight.x;
-			
-			if (d < minimalDistance)
-			{
-				penetrationVector.x = 1;
-				penetrationVector.y = 0;
-			}
-		}
-		// a rechts von b
-		else if(upperLeft.x > other.upperRight.x)
-		{
-			float d = other.upperRight.x - upperLeft.x;
-			
-			if (d < minimalDistance)
-			{
-				penetrationVector.x = -1;
-				penetrationVector.y = 0;
-			}
-		}
-		// a exakt über/unter b (oder innerhalb/identisch)
-		else
-		{
-			// ...
+			smallestDist = d;
+			penetrationDir.x = 0;
+			penetrationDir.y = 1;
 		}
 		
-		
-		// projektion auf y-achse
-		
-		// a über b
-		if(lowerLeft.y < other.upperLeft.y)
+		d = other.lowerLeft.y - upperLeft.y;
+		if(d < smallestDist)
 		{
-			float d = other.upperLeft.y - lowerLeft.y;
-			
-			if (d < minimalDistance)
-			{
-				penetrationVector.x = 0;
-				penetrationVector.y = 1;
-			}
-		}
-		// a unter b
-		else if(upperLeft.y > other.lowerLeft.y)
-		{
-			float d = other.lowerLeft.y - upperLeft.y;
-			
-			if (d < minimalDistance)
-			{
-				penetrationVector.x = 0;
-				penetrationVector.y = -1;
-			}
-		}
-		// innerhalb/identisch
-		else
-		{
-			return null;
+			smallestDist = d;
+			penetrationDir.x = 0;
+			penetrationDir.y = -1;
 		}
 		
-		return penetrationVector.scale(minimalDistance);
+		d = upperRight.x - other.upperLeft.x;
+		if(d < smallestDist)
+		{
+			smallestDist = d;
+			penetrationDir.x = 1;
+			penetrationDir.y = 0;
+		}
+		
+		d = other.upperRight.x - upperLeft.x;
+		if(d < smallestDist)
+		{
+			smallestDist = d;
+			penetrationDir.x = -1;
+			penetrationDir.y = 0;
+		}
+		
+		return penetrationDir.scale(smallestDist);
 	}
 	
 	public void setCenter(Vector2f c)

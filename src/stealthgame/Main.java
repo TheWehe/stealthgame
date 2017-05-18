@@ -1,39 +1,25 @@
+// TODO: das ganze programm zustandsbasiert machen; z.b.: hauptmenü, spiel, abspann
+// TODO: level aus xml datei laden
+
 package stealthgame;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
-
 import org.newdawn.slick.Input;
-import org.newdawn.slick.command.InputProvider;
-import org.newdawn.slick.command.InputProviderListener;
-import org.newdawn.slick.command.BasicCommand;
-import org.newdawn.slick.command.Command;
-import org.newdawn.slick.command.KeyControl;
 
-public class Main extends BasicGame implements InputProviderListener
+public class Main extends BasicGame
 {
+	private Input input;
+	private Image playerImage;
 	private World world;
-	
-	private Player p;
-	
-	private InputProvider iProvider;
-	
-	private Command walkup = new BasicCommand("walkup");
-	private Command walkdown = new BasicCommand("walkdown");
-	private Command walkleft = new BasicCommand("walkleft");
-	private Command walkright = new BasicCommand("walkright");
-	
-	private boolean[] inputs = new boolean[4];
-	
+	private Player player;
 	
 	public Main(String gamename)
 	{
@@ -43,25 +29,27 @@ public class Main extends BasicGame implements InputProviderListener
 	@Override
 	public void init(GameContainer gc) throws SlickException
 	{
+		input = gc.getInput();
+		
+		playerImage = new Image("/assets/Mexikaner.png");
+		
 		world = new World();
 		
-		iProvider = new InputProvider(gc.getInput());
-		iProvider.addListener((InputProviderListener)this);
+		player = new Player("Player", new Vector2f(100, 200), playerImage);
+		world.addGameObject(player);
 		
-		iProvider.bindCommand(new KeyControl(Input.KEY_W), walkup);
-		iProvider.bindCommand(new KeyControl(Input.KEY_A), walkleft);
-		iProvider.bindCommand(new KeyControl(Input.KEY_S), walkdown);
-		iProvider.bindCommand(new KeyControl(Input.KEY_D), walkright);
-		
-		p = new Player(new Vector2f(200, 200));
-		
-		world.addGameObject(p);
+		Crate crate1 = new Crate("Crate1", new Vector2f(450, 400), new Vector2f(250, 250));
+		world.addGameObject(crate1);
 	}
 
 	@Override
 	public void update(GameContainer gc, int i) throws SlickException
 	{
-		this.updateInput((float)i / 1000.f);
+		if(input.isKeyDown(Input.KEY_W)) player.moveUp();
+		if(input.isKeyDown(Input.KEY_A)) player.moveLeft();
+		if(input.isKeyDown(Input.KEY_S)) player.moveDown();
+		if(input.isKeyDown(Input.KEY_D)) player.moveRight();
+		
 		world.update((float)i / 1000.f);
 		world.postUpdate();
 	}
@@ -69,78 +57,8 @@ public class Main extends BasicGame implements InputProviderListener
 	@Override
 	public void render(GameContainer gc, Graphics g) throws SlickException
 	{
-		world.render();
+		world.render(g);
 	}
-	
-	
-	
-	private void updateInput(float delta)
-	{
-		if(this.inputs[0])
-		{
-			this.p.moveUP(delta);
-		}
-		if(this.inputs[1])
-		{
-			this.p.moveRIGHT(delta);
-		}
-		if(this.inputs[2])
-		{
-			this.p.moveDOWN(delta);
-		}
-		if(this.inputs[3])
-		{
-			this.p.moveLEFT(delta);
-		}
-	}
-	
-
-	
-	//input:
-	public void controlPressed(Command c)
-	{
-		if(c == this.walkup)
-		{
-			this.inputs[0] = true;
-		}
-		if(c == this.walkright)
-		{
-			this.inputs[1] = true;
-		}
-		if(c == this.walkdown)
-		{
-			this.inputs[2] = true;
-		}
-		if(c == this.walkleft)
-		{
-			this.inputs[3] = true;
-		}
-	}
-	
-	public void controlReleased(Command c)
-	{
-		if(c == this.walkup)
-		{
-			this.inputs[0] = false;
-			this.p.stop();
-		}
-		if(c == this.walkright)
-		{
-			this.inputs[1] = false;
-			this.p.stop();
-		}
-		if(c == this.walkdown)
-		{
-			this.inputs[2] = false;
-			this.p.stop();
-		}
-		if(c == this.walkleft)
-		{
-			this.inputs[3] = false;
-			this.p.stop();
-		}
-	}
-	
 
 	public static void main(String[] args)
 	{

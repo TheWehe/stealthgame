@@ -1,5 +1,6 @@
 package stealthgame;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -13,7 +14,7 @@ public class SpriteGameObject extends GameObject {
 	}
 	
 	@Override
-	public void render()
+	public void render(Graphics gfx)
 	{
 		image.setRotation(angle);
 		image.drawCentered(position.x, position.y);

@@ -1,13 +1,15 @@
+// TODO: raycast-funktion die liste mit getroffenen gos zurückgibt (sortiert nach abstand zum startpunkt)
+
 package stealthgame;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
 public class World {
 	private ArrayList<GameObject> staticGos;
 	private ArrayList<GameObject> dynamicGos;
-	private ArrayList<GameObject> physicalGos;
 	
 	public World()
 	{
@@ -27,18 +29,12 @@ public class World {
 		{
 			staticGos.add(go);
 		}
-		
-		if(go.getAABB() != null)
-		{
-			physicalGos.add(go);
-		}
 	}
 	
 	public void removeGameObject(GameObject go)
 	{
 		staticGos.remove(go);
 		dynamicGos.remove(go);
-		physicalGos.remove(go);
 	}
 	
 	public ArrayList<GameObject> getDynamicGameObjects()
@@ -81,9 +77,26 @@ public class World {
 		return r;
 	}
 	
-	public GameObject raycast(Vector2f pos, Vector2f dir, float len)
+	private void doPhysics()
 	{
-		return null;
+		Vector2f v;
+		
+		for(int i = 0; i < dynamicGos.size(); i++)
+		{
+			GameObject d = dynamicGos.get(i);
+			if(d.getAABB() == null) continue;
+			
+			for(int j = 0; j < staticGos.size(); j++)
+			{
+				GameObject s = staticGos.get(j);
+				if(s.getAABB() == null) continue;
+				
+				v = d.getAABB().checkCollision(s.getAABB());
+				if(v == null) continue;
+				
+				d.move(v.negate());
+			}
+		}
 	}
 	
 	public void update(float delta)
@@ -92,6 +105,8 @@ public class World {
 		{
 			dynamicGos.get(i).update(delta);
 		}
+		
+		doPhysics();
 	}
 	
 	public void postUpdate()
@@ -102,16 +117,16 @@ public class World {
 		}
 	}
 	
-	public void render()
+	public void render(Graphics gfx)
 	{
 		for(int i = 0; i < staticGos.size(); i++)
 		{
-			staticGos.get(i).render();
+			staticGos.get(i).render(gfx);
 		}
 		
 		for(int i = 0; i < dynamicGos.size(); i++)
 		{
-			dynamicGos.get(i).render();
+			dynamicGos.get(i).render(gfx);
 		}
 	}
 }

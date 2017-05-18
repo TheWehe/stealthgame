@@ -1,5 +1,6 @@
 package stealthgame;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
 public class GameObject {
@@ -21,7 +22,7 @@ public class GameObject {
 	
 	public void update(float delta) {}
 	public void postUpdate() {}
-	public void render() {}
+	public void render(Graphics gfx) {}
 	
 	void setWorld(World w)
 	{
@@ -76,10 +77,5 @@ public class GameObject {
 	public AABB getAABB()
 	{
 		return aabb;
-	}
-	
-	public void setAABB(AABB ab)
-	{
-		aabb = ab;
 	}
 }

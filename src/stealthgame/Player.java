@@ -2,51 +2,46 @@ package stealthgame;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Player extends SpriteGameObject {
-	private float movementSpeed = 100;
-	private float vx, vy;
+	private float movementSpeed = 200;
+	private Vector2f velocity;
 	
-	public Player(Vector2f pos) throws SlickException {
-		super("Player", true, pos, 0, new Image("/assets/Mexikaner.png"));
+	public Player(String name, Vector2f pos, Image img) throws SlickException {
+		super(name, true, pos, 0, img);
+		super.aabb = new AABB(super.position, new Vector2f(30, 30));
+		
+		velocity = new Vector2f();
 	}
-	
 	
 	@Override
 	public void update(float delta)
-	{
-		Vector2f v = new Vector2f(vx, vy);
-		super.move(v);
+	{	
+		super.move(velocity.scale(delta));
+		if(velocity.lengthSquared() != 0) super.setAngle((float)velocity.getTheta() + 90);
+		velocity.set(0, 0);
 		
-		super.setAngle((float)v.getTheta()+90);
+		super.aabb.setCenter(super.position);
 	}
 	
-	
-	public void moveUP(float delta)
+	public void moveUp()
 	{
-		this.vy = -this.movementSpeed*delta;
+		velocity.y -= movementSpeed;
 	}
 	
-	public void moveDOWN(float delta)
+	public void moveDown()
 	{
-		this.vy = this.movementSpeed*delta;
+		velocity.y += movementSpeed;
 	}
 	
-	public void moveLEFT(float delta)
+	public void moveLeft()
 	{
-		this.vx = -this.movementSpeed*delta;
+		velocity.x -= movementSpeed;
 	}
 	
-	public void moveRIGHT(float delta)
+	public void moveRight()
 	{
-		this.vx = this.movementSpeed*delta;
-	}
-	
-	public void stop()
-	{
-		this.vx = 0;
-		this.vy = 0;
+		velocity.x += movementSpeed;
 	}
 }
