@@ -25,6 +25,15 @@ public class Player extends SpriteGameObject {
 		super.aabb.setCenter(super.position);
 	}
 	
+	@Override
+	public void postUpdate()
+	{
+		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection(), 100), this);
+		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection().copy().getPerpendicular(), 100), this);
+		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection().copy().negate(), 100), this);
+		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection().copy().getPerpendicular().negate(), 100), this);
+	}
+	
 	public void moveUp()
 	{
 		velocity.y -= movementSpeed;

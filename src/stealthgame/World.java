@@ -8,13 +8,40 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 
 public class World {
+	public static class RaycastHit
+	{
+		public Vector2f pos;
+		public GameObject go;
+		
+		public RaycastHit(Vector2f p, GameObject g)
+		{
+			pos = p;
+			go = g;
+		}
+	}
+	
+	public static class RaycastResult
+	{
+		public MathUtil.Ray ray;
+		public ArrayList<RaycastHit> hits;
+		
+		public RaycastResult(MathUtil.Ray r, ArrayList<RaycastHit> h)
+		{
+			ray = r;
+			hits = h;
+		}
+	}
+	
 	private ArrayList<GameObject> staticGos;
 	private ArrayList<GameObject> dynamicGos;
+	private boolean debugMode;
+	private ArrayList<RaycastResult> debugRaycastResults;
 	
 	public World()
 	{
 		staticGos = new ArrayList<GameObject>();
 		dynamicGos = new ArrayList<GameObject>();
+		debugMode = false;
 	}
 	
 	public void addGameObject(GameObject go)
@@ -77,6 +104,20 @@ public class World {
 		return r;
 	}
 	
+	public void setDebugMode(boolean b)
+	{
+		if(b)
+		{
+			debugMode = true;
+			debugRaycastResults = new ArrayList<RaycastResult>();
+		}
+		else
+		{
+			debugMode = false;
+			debugRaycastResults = null;
+		}
+	}
+	
 	private void doPhysics()
 	{
 		Vector2f v;
@@ -99,6 +140,22 @@ public class World {
 		}
 	}
 	
+	public RaycastResult raycast(MathUtil.Ray ray, GameObject ignore)
+	{
+		ArrayList<RaycastHit> hits = new ArrayList<RaycastHit>();
+		
+		
+		
+		RaycastResult r = new RaycastResult(ray, hits);
+		
+		if(debugMode)
+		{
+			debugRaycastResults.add(r);
+		}
+		
+		return r;
+	}
+
 	public void update(float delta)
 	{
 		for(int i = 0; i < dynamicGos.size(); i++)
@@ -122,11 +179,35 @@ public class World {
 		for(int i = 0; i < staticGos.size(); i++)
 		{
 			staticGos.get(i).render(gfx);
+			
+			if(debugMode)
+			{
+				if(staticGos.get(i).getAABB() != null)
+				{
+					DebugRenderer.renderAABB(gfx, staticGos.get(i).getAABB());
+				}
+			}
 		}
 		
 		for(int i = 0; i < dynamicGos.size(); i++)
 		{
 			dynamicGos.get(i).render(gfx);
+			
+			if(debugMode)
+			{
+				if(dynamicGos.get(i).getAABB() != null)
+				{
+					DebugRenderer.renderAABB(gfx, dynamicGos.get(i).getAABB());
+				}
+			}
+		}
+		
+		if(debugMode)
+		{
+			for(int i = 0; i < debugRaycastResults.size(); i++)
+			{
+				DebugRenderer.renderRayCastResult(gfx, debugRaycastResults.get(i));
+			}
 		}
 	}
 }

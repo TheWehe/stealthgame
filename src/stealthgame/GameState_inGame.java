@@ -21,7 +21,6 @@ public class GameState_inGame extends BasicGameState {
 	
 
 	public GameState_inGame(Main game) {
-		// TODO Auto-generated constructor stub
 		this.game = game;
 	}
 	
@@ -50,6 +49,8 @@ public class GameState_inGame extends BasicGameState {
 		route1.addPoint(new Vector2f(50, 550));
 		Guard guard1 = new Guard("Guard1", new Vector2f(900, 740), route1);
 		world.addGameObject(guard1);
+		
+		world.setDebugMode(true);
 	}
 	
 	@Override
