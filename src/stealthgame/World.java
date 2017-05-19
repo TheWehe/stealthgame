@@ -208,6 +208,8 @@ public class World {
 			{
 				DebugRenderer.renderRayCastResult(gfx, debugRaycastResults.get(i));
 			}
+			
+			debugRaycastResults.clear();
 		}
 	}
 }

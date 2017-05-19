@@ -71,7 +71,7 @@ public class GameObject {
 	
 	public Vector2f getDirection()
 	{
-		return new Vector2f((float)Math.sin(angle), (float)-Math.cos(angle));
+		return new Vector2f((float)Math.sin(angle * (Math.PI / 180)), (float)-Math.cos(angle * (Math.PI / 180)));
 	}
 	
 	public AABB getAABB()

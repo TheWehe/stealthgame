@@ -28,10 +28,10 @@ public class Player extends SpriteGameObject {
 	@Override
 	public void postUpdate()
 	{
-		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection(), 100), this);
-		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection().copy().getPerpendicular(), 100), this);
-		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection().copy().negate(), 100), this);
-		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection().copy().getPerpendicular().negate(), 100), this);
+		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection(), 400), this);
+		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection().copy().getPerpendicular(), 400), this);
+		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection().copy().negate(), 400), this);
+		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection().copy().getPerpendicular().negate(), 400), this);
 	}
 	
 	public void moveUp()
