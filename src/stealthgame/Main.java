@@ -21,7 +21,6 @@ public class Main extends StateBasedGame
 	{
 		this.addState(new GameState_MainMenu(this));
 		this.addState(new GameState_InGame(this));
-		this.addState(new GameState_InGameMenu(this));
 	}
 
 	public static void main(String[] args)
@@ -30,7 +29,8 @@ public class Main extends StateBasedGame
 		{
 			AppGameContainer appgc;
 			appgc = new AppGameContainer(new Main("Stealth game"));
-			appgc.setDisplayMode(1024, 768, false);
+			appgc.setDisplayMode(1000, 700, false);
+			appgc.setShowFPS(false);
 			appgc.start();
 		}
 		catch (SlickException ex)

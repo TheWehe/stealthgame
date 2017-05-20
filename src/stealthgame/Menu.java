@@ -3,101 +3,74 @@ package stealthgame;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-
+import org.newdawn.slick.geom.Vector2f;
 
 public class Menu {
+	private MenuListener listener;
 	private ArrayList<MenuPart> parts;
-	private Image background = null;
 	
-
-	public Menu() 
+	public Menu(MenuListener l)
 	{
-		this.parts = new ArrayList<MenuPart>();
+		listener = l;
+		parts = new ArrayList<MenuPart>();
 	}
 	
-	public Menu(Image background)
+	public void add(MenuPart part)
 	{
-		this.parts = new ArrayList<MenuPart>();
+		part.setListener(listener);
+		parts.add(part);
+	}
+	
+	public void mouseDown(Vector2f place)
+	{
+		MenuPart cur;
 		
-		this.background = background;
-	}
-	
-	
-	
-	public void update()
-	{
-		for(int i = 0 ; i < this.parts.size() ; i++)
+		for(int i = 0; i < parts.size(); i++)
 		{
-			MenuPart p = (MenuPart) this.parts.get(i);
-			p.update();
+			cur = parts.get(i);
+			
+			if(cur.getShape().contains(place.x, place.y))
+			{
+				cur.mouseDownInside();
+			}
+			
+			cur.mouseDown(place);
 		}
 	}
 	
-	public void render(Graphics c)
+	public void mouseUp(Vector2f place)
 	{
-		if(this.background != null) this.background.draw();
+		MenuPart cur;
 		
-		for(int i = 0 ; i < this.parts.size() ; i++)
+		for(int i = 0; i < parts.size(); i++)
 		{
-			MenuPart p = (MenuPart) this.parts.get(i);
-			p.render(c);
-		}
-	}
-	
-	
-	
-	public void addPart(MenuPart p)
-	{
-		this.parts.add(p);
-	}
-	
-	public void remove(MenuPart p)
-	{
-		this.parts.remove(p);
-	}
-	
-	public boolean hasPart(MenuPart p)
-	{
-		for(int i = 0 ; i < this.parts.size(); i++) 
-		{
-			MenuPart cp = (MenuPart) this.parts.get(i);
+			cur = parts.get(i);
 			
-			if(cp == p)
+			if(cur.getShape().contains(place.x, place.y))
 			{
-				return true;
+				cur.mouseUpInside();
 			}
+			
+			cur.mouseUp(place);
 		}
-		return false;
 	}
 	
-	public boolean hasPart(String name)
+	public void update(float delta)
 	{
-		for(int i = 0 ; i < this.parts.size(); i++) 
-		{
-			MenuPart cp = (MenuPart) this.parts.get(i);
-			
-			if(cp.getName() == name)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public MenuPart getPart(String name)
-	{
-		for(int i = 0 ; i < this.parts.size(); i++) 
-		{
-			MenuPart mp = (MenuPart) this.parts.get(i);
-			
-			if(mp.getName() == name)
-			{
-				return mp;
-			}
-		}
+		MenuPart cur;
 		
-		return null;
+		for(int i = 0; i < parts.size(); i++)
+		{
+			cur = parts.get(i);
+			cur.update(delta);
+		}
 	}
-
+	
+	public void render(Graphics gfx)
+	{
+		for(int i = 0; i < parts.size(); i++)
+		{
+			parts.get(i).render(gfx);
+		}
+	}
 }

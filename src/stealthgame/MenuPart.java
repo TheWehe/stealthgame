@@ -1,48 +1,53 @@
 package stealthgame;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
 public abstract class MenuPart {
 	private String name;
-	private Vector2f pos;
-	private Shape hitbox;
+	private Shape shape;
+	private Vector2f position;
+	private MenuListener listener;
 	
-
-	public MenuPart(String name, Vector2f pos, Shape hitbox) {
-		this.name = name;
-		
-		this.pos = new Vector2f();
-		this.pos = pos;
-		
-		this.hitbox = hitbox;
+	public MenuPart(String n, Shape s, Vector2f p)
+	{
+		name = n;
+		shape = s;
+		position = p.copy();
+		listener = null;
 	}
 	
+	public void mouseDown(Vector2f place) {}
+	public void mouseUp(Vector2f place) {}
+	public void mouseDownInside() {}
+	public void mouseUpInside() {}
+	public void update(float delta) {}
+	
+	public abstract void render(Graphics gfx);
 	
 	public String getName()
 	{
-		return this.name;
+		return name;
 	}
 	
-	public Vector2f getPos()
+	public void setListener(MenuListener l)
 	{
-		return this.pos;
+		listener = l;
 	}
 	
-	public Shape getHitbox()
+	public MenuListener getListener()
 	{
-		return this.hitbox;
+		return listener;
 	}
 	
-	public boolean mouseCollision(Input i)
+	public Shape getShape()
 	{
-		return this.hitbox.contains(i.getMouseX(), i.getMouseY());
+		return shape;
 	}
 	
-	
-	public abstract void update();
-	public abstract void render(Graphics gfx);
-
+	public Vector2f getPosition()
+	{
+		return position;
+	}
 }

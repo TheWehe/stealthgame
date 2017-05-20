@@ -1,5 +1,6 @@
 package stealthgame;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -11,15 +12,14 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class GameState_InGame extends BasicGameState {
 	public static final int ID = 1;
-	private Main game;
 	
 	private Input input;
 	private Image playerImage;
 	private World world;
 	private Player player;
 
-	public GameState_InGame(Main game) {
-		this.game = game;
+	public GameState_InGame(Main game)
+	{
 	}
 	
 	@Override
@@ -52,8 +52,13 @@ public class GameState_InGame extends BasicGameState {
 	
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
-	{
+	{	
+		g.setBackground(Color.white);
+		
 		world.render(g);
+		
+		g.setColor(Color.black);
+		g.drawString(Integer.toString(gc.getFPS()), 10, 10);
 	}
 	
 	@Override 
@@ -63,7 +68,6 @@ public class GameState_InGame extends BasicGameState {
 		if(input.isKeyDown(Input.KEY_A)) player.moveLeft();
 		if(input.isKeyDown(Input.KEY_S)) player.moveDown();
 		if(input.isKeyDown(Input.KEY_D)) player.moveRight();
-		if(input.isKeyDown(Input.KEY_ESCAPE)) this.game.enterState(GameState_InGameMenu.ID);
 		
 		world.update((float)arg2 / 1000.f);
 		world.postUpdate();
@@ -72,6 +76,6 @@ public class GameState_InGame extends BasicGameState {
 	@Override
 	public int getID()
 	{
-		return GameState_InGame.ID;
+		return ID;
 	}
 }

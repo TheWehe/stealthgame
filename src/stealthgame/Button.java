@@ -1,59 +1,52 @@
 package stealthgame;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Button extends MenuPart {
-	private Image image = null;
-
-	public Button(String name, Vector2f pos, Shape hitbox, Image image) {
-		super(name, pos, hitbox);
-		
-		this.image = image;
-	}
+	private Image image;
+	private boolean currentlyDown;
 	
-	public Button(String name, Vector2f pos, Shape hitbox) {
-		super(name, pos, hitbox);
-	}
-	
-	
-	@Override
-	public void update()
-	{
-		
+	public Button(String name, Vector2f pos, Image img) {
+		super(name, new Rectangle(pos.x, pos.y, img.getWidth(), img.getHeight()), pos);
+		image = img;
+		currentlyDown = false;
 	}
 	
 	@Override
-	public void render(Graphics gfx) 
-	{
-		if(this.image != null)
-		{
-			this.image.draw(super.getPos().x, super.getPos().y);
-		}else
-		{
-			Rectangle r = new Rectangle(super.getPos().x,
-					super.getPos().y, 
-					super.getHitbox().getWidth(), super.getHitbox().getHeight());
-			
-			gfx.setColor(Color.red);
-			gfx.fill(r);
-		}
-	}
-	
-	
-	public boolean isPressed(Input i)
-	{
-		if(super.mouseCollision(i) && i.isMousePressed(0))
-		{
-			return true;
-		}
-		
-		return false;
+	public void mouseUp(Vector2f place) {
+		currentlyDown = false;
 	}
 
+	@Override
+	public void mouseDownInside() {
+		currentlyDown = true;
+	}
+
+	@Override
+	public void mouseUpInside() {
+		if(currentlyDown)
+		{
+			super.getListener().buttonPressed(super.getName());
+		}
+	}
+
+	@Override
+	public void render(Graphics gfx) {
+		if(currentlyDown)
+		{
+			Image scaled = image.getScaledCopy(0.95f);
+			float diffW = image.getWidth() - scaled.getWidth();
+			float diffH = image.getHeight() - scaled.getHeight();
+			float x = super.getPosition().x + scaled.getWidth() / 2 + diffW / 2;
+			float y = super.getPosition().y + scaled.getHeight() / 2 + diffH / 2;
+			scaled.drawCentered(x, y);
+		}
+		else
+		{
+			gfx.drawImage(image, super.getPosition().x, super.getPosition().y);
+		}
+	}
 }
