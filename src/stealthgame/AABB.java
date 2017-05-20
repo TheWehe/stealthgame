@@ -17,7 +17,7 @@ public class AABB {
 		upperRight = new Vector2f(center.x + size.x / 2.f, center.y - size.y / 2.f);
 		lowerLeft = new Vector2f(center.x - size.x / 2.f, center.y + size.y / 2.f);
 		lowerRight = new Vector2f(center.x + size.x / 2.f, center.y + size.y / 2.f);
-		radius = center.sub(upperLeft).length();
+		radius = center.copy().sub(upperLeft).length();
 	}
 	
 	public AABB(Vector2f c, Vector2f s)

@@ -143,8 +143,38 @@ public class World {
 	public RaycastResult raycast(MathUtil.Ray ray, GameObject ignore)
 	{
 		ArrayList<RaycastHit> hits = new ArrayList<RaycastHit>();
+		GameObject cur;
+		Vector2f hit;
 		
+		for(int i = 0; i < staticGos.size(); i++)
+		{
+			cur = staticGos.get(i);
+			
+			if(cur != ignore && cur.getAABB() != null)
+			{
+				hit = MathUtil.raycast(ray, cur.getAABB());
+				
+				if(hit != null)
+				{
+					hits.add(new RaycastHit(hit, cur));
+				}
+			}
+		}
 		
+		for(int i = 0; i < dynamicGos.size(); i++)
+		{
+			cur = dynamicGos.get(i);
+			
+			if(cur != ignore && cur.getAABB() != null)
+			{
+				hit = MathUtil.raycast(ray, cur.getAABB());
+				
+				if(hit != null)
+				{
+					hits.add(new RaycastHit(hit, cur));
+				}
+			}
+		}
 		
 		RaycastResult r = new RaycastResult(ray, hits);
 		

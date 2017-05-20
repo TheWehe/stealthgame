@@ -29,9 +29,6 @@ public class Player extends SpriteGameObject {
 	public void postUpdate()
 	{
 		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection(), 400), this);
-		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection().copy().getPerpendicular(), 400), this);
-		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection().copy().negate(), 400), this);
-		super.world.raycast(new MathUtil.Ray(super.position, super.getDirection().copy().getPerpendicular().negate(), 400), this);
 	}
 	
 	public void moveUp()

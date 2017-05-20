@@ -21,10 +21,10 @@ public class MathUtil {
 	public static Vector2f lineSegmentIntersection(Vector2f a, Vector2f b, Vector2f p, Vector2f q)
 	{
 		Vector2f r = MathUtil.solveLS2(b.x - a.x, 
-				b.y - a.y, 
-				-a.x + p.x, 
-				-a.y + p.y, 
+				-q.x + p.x, 
 				p.x - a.x, 
+				b.y - a.y, 
+				-q.y + p.y, 
 				p.y - a.y);
 		
 		if(r != null)
@@ -40,7 +40,7 @@ public class MathUtil {
 	
 	public static float projectPointOntoAxis(Vector2f axis, Vector2f point)
 	{
-		return axis.distance(point);
+		return axis.dot(point);
 	}
 	
 	public static Vector2f projectAABBOntoAxis(Vector2f axis, AABB aabb)
@@ -82,5 +82,44 @@ public class MathUtil {
 		}
 	}
 	
-	
+	public static Vector2f raycast(Ray ray, AABB aabb)
+	{
+		Vector2f axis = ray.dir.copy().getPerpendicular();
+		Vector2f aabbProjection = projectAABBOntoAxis(axis, aabb);
+		float rayProjection = projectPointOntoAxis(axis, ray.pos);
+		if(!intervalContainsValue(aabbProjection, rayProjection)) return null;
+		
+		Vector2f rayP1 = ray.pos.copy();
+		Vector2f rayP2 = ray.pos.copy().add(ray.dir.copy().scale(ray.dist));
+		float nearestParam = Float.POSITIVE_INFINITY;
+		
+		Vector2f comp = lineSegmentIntersection(rayP1, rayP2, aabb.getUpperLeft(), aabb.getUpperRight());
+		if(comp != null)
+		{
+			nearestParam = comp.x;
+		}
+		
+		comp = lineSegmentIntersection(rayP1, rayP2, aabb.getUpperRight(), aabb.getLowerRight());
+		if(comp != null)
+		{
+			if(comp.x < nearestParam) nearestParam = comp.x;
+		}
+		
+		comp = lineSegmentIntersection(rayP1, rayP2, aabb.getLowerRight(), aabb.getLowerLeft());
+		if(comp != null)
+		{
+			if(comp.x < nearestParam) nearestParam = comp.x;
+		}
+		
+		comp = lineSegmentIntersection(rayP1, rayP2, aabb.getLowerLeft(), aabb.getUpperLeft());
+		if(comp != null)
+		{
+			if(comp.x < nearestParam) nearestParam = comp.x;
+		}
+		
+		if(nearestParam > 1) return null;
+		
+		rayP1.add(rayP2.sub(rayP1.copy()).scale(nearestParam));
+		return rayP1;
+	}
 }

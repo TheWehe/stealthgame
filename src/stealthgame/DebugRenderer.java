@@ -1,7 +1,5 @@
 package stealthgame;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Line;
@@ -36,7 +34,7 @@ public class DebugRenderer {
 	
 	public static void renderRay(Graphics gfx, MathUtil.Ray r)
 	{
-		renderLineSegment(gfx, r.pos, r.pos.copy().add(r.dir.scale(r.dist)));
+		renderLineSegment(gfx, r.pos, r.pos.copy().add(r.dir.copy().scale(r.dist)));
 	}
 	
 	public static void renderRayCastResult(Graphics gfx, World.RaycastResult result)
