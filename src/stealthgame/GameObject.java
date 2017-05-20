@@ -20,6 +20,7 @@ public class GameObject {
 		aabb = null;
 	}
 	
+	public void start() {}
 	public void update(float delta) {}
 	public void postUpdate() {}
 	public void render(Graphics gfx) {}

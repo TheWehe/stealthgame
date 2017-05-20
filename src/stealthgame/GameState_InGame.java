@@ -56,6 +56,7 @@ public class GameState_InGame extends BasicGameState {
 		Spotlight spotlight1 = new Spotlight("Spotloght1", new Vector2f(500, 350), route2);
 		world.addGameObject(spotlight1);
 		
+		world.start();
 		world.setDebugMode(true);
 	}
 	

@@ -1,6 +1,8 @@
 package stealthgame;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
@@ -176,6 +178,13 @@ public class World {
 		
 		RaycastResult r = new RaycastResult(ray, hits);
 		
+		Collections.sort(r.hits, new Comparator<RaycastHit>() {
+		    @Override
+		    public int compare(RaycastHit o1, RaycastHit o2) {
+		        return (int)ray.pos.distanceSquared(o1.pos) - (int)ray.pos.distanceSquared(o2.pos);
+		    }
+		});
+		
 		if(debugMode)
 		{
 			debugRaycastResults.add(r);
@@ -184,6 +193,19 @@ public class World {
 		return r;
 	}
 
+	public void start()
+	{
+		for(int i = 0; i < dynamicGos.size(); i++)
+		{
+			dynamicGos.get(i).start();
+		}
+		
+		for(int i = 0; i < staticGos.size(); i++)
+		{
+			staticGos.get(i).start();
+		}
+	}
+	
 	public void update(float delta)
 	{
 		for(int i = 0; i < dynamicGos.size(); i++)
