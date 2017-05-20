@@ -6,13 +6,13 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Vector2f;
 
-public class Spotlight extends GameObject {
+public class Spotlight extends SpriteGameObject {
 	private float movementSpeed = 150;
 	private Route route;
 
 	
-	public Spotlight(String name, Vector2f p, Route r) {
-		super(name, true, p, 0);
+	public Spotlight(String name, Vector2f p, Route r, Image img) {
+		super(name, true, p, 0, img);
 		
 		this.route = r;
 	}
