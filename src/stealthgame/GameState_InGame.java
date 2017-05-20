@@ -39,13 +39,22 @@ public class GameState_InGame extends BasicGameState {
 		player = new Player("Player", new Vector2f(800, 300), playerImage);
 		world.addGameObject(player);
 		
-		Route route1 = new Route(1);
+		Route route1 = new Route(1, false);
 		route1.addPoint(new Vector2f(550, 550));
 		route1.addPoint(new Vector2f(550, 50));
 		route1.addPoint(new Vector2f(50, 50));
 		route1.addPoint(new Vector2f(50, 550));
 		Guard guard1 = new Guard("Guard1", new Vector2f(900, 740), route1);
 		world.addGameObject(guard1);
+		
+		Route route2 = new Route(1, true);
+		route2.addPoint(new Vector2f(125, 100));
+		route2.addPoint(new Vector2f(850, 100));
+		route2.addPoint(new Vector2f(100, 530));
+		route2.addPoint(new Vector2f(790, 600));
+		route2.addPoint(new Vector2f(440, 350));
+		Spotlight spotlight1 = new Spotlight("Spotloght1", new Vector2f(500, 350), route2);
+		world.addGameObject(spotlight1);
 		
 		world.setDebugMode(true);
 	}

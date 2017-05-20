@@ -7,13 +7,18 @@ public class Route {
 	private ArrayList<Vector2f> points;
 	private int curTarget;
 	private float precision;
+	private boolean ran;
 	
-	public Route(float p)
+	
+	public Route(float p, boolean ran)
 	{
 		points = new ArrayList<Vector2f>();
 		precision = p;
 		curTarget = 0;
+		
+		this.ran = ran;
 	}
+	
 	
 	public void addPoint(Vector2f p)
 	{
@@ -29,9 +34,15 @@ public class Route {
 	{
 		if(curPos.distance(getCurTarget()) < precision)
 		{
-			curTarget++;
+			if(!this.ran)
+			{
+				curTarget++;
 			
-			if(curTarget >= points.size()) curTarget = 0;
+				if(curTarget >= points.size()) curTarget = 0;
+			}else 
+			{
+				curTarget = (int)(Math.random() * this.points.size()); 
+			}
 		}
 	}
 }
