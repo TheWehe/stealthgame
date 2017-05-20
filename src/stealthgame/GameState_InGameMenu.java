@@ -9,21 +9,16 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class GameState_GameMenu extends BasicGameState {
-	public static final int ID = 1;
-	
+public class GameState_InGameMenu extends BasicGameState {
+	public static final int ID = 2;
 	private Main game;
 	
 	private Input input;
-	
 	private Menu menu;
-	
 
-	public GameState_GameMenu(Main game) {
-		// TODO Auto-generated constructor stub
+	public GameState_InGameMenu(Main game) {
 		this.game = game;
 	}
-	
 	
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException
@@ -31,7 +26,7 @@ public class GameState_GameMenu extends BasicGameState {
 		input = gc.getInput();
 		
 		this.menu = new Menu();
-		this.menu.addPart(new Button("Button", new Vector2f(500, 500), new Rectangle(500, 500, 50, 50)));
+		this.menu.addPart(new Button("Button", new Vector2f(300, 100), new Rectangle(300, 100, 50, 50)));
 	}
 	
 	@Override
@@ -44,13 +39,12 @@ public class GameState_GameMenu extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame sbg, int arg2) throws SlickException
 	{
 		Button mb = (Button)this.menu.getPart("Button");
-		if(mb.isPressed(gc.getInput())) this.game.enterState(0);
+		if(mb.isPressed(input)) this.game.enterState(GameState_InGame.ID);
 	}
 	
 	@Override
 	public int getID()
 	{
-		return GameState_GameMenu.ID;
+		return GameState_InGameMenu.ID;
 	}
-
 }

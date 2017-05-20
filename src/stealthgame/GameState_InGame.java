@@ -9,21 +9,18 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class GameState_inGame extends BasicGameState {
-	public static final int ID = 0;
-	
+public class GameState_InGame extends BasicGameState {
+	public static final int ID = 1;
 	private Main game;
 	
 	private Input input;
 	private Image playerImage;
 	private World world;
 	private Player player;
-	
 
-	public GameState_inGame(Main game) {
+	public GameState_InGame(Main game) {
 		this.game = game;
 	}
-	
 	
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException
@@ -66,7 +63,7 @@ public class GameState_inGame extends BasicGameState {
 		if(input.isKeyDown(Input.KEY_A)) player.moveLeft();
 		if(input.isKeyDown(Input.KEY_S)) player.moveDown();
 		if(input.isKeyDown(Input.KEY_D)) player.moveRight();
-		if(input.isKeyDown(Input.KEY_ESCAPE)) this.game.enterState(1);
+		if(input.isKeyDown(Input.KEY_ESCAPE)) this.game.enterState(GameState_InGameMenu.ID);
 		
 		world.update((float)arg2 / 1000.f);
 		world.postUpdate();
@@ -75,7 +72,6 @@ public class GameState_inGame extends BasicGameState {
 	@Override
 	public int getID()
 	{
-		return GameState_inGame.ID;
+		return GameState_InGame.ID;
 	}
-
 }

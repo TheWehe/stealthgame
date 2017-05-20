@@ -1,4 +1,3 @@
-// TODO: das ganze programm zustandsbasiert machen; z.b.: hauptmenü, spiel, abspann
 // TODO: level aus xml datei laden
 
 package stealthgame;
@@ -6,32 +5,24 @@ package stealthgame;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.Input;
 
-public class Main extends StateBasedGame//BasicGame
+public class Main extends StateBasedGame
 {
-	
 	public Main(String gamename)
 	{
 		super(gamename);
 	}
 	
-	
 	@Override
-	public void initStatesList(GameContainer gc)throws SlickException
+	public void initStatesList(GameContainer gc) throws SlickException
 	{
-		this.addState(new GameState_inGame(this));
-		this.addState(new GameState_GameMenu(this));
+		this.addState(new GameState_MainMenu(this));
+		this.addState(new GameState_InGame(this));
+		this.addState(new GameState_InGameMenu(this));
 	}
-
 
 	public static void main(String[] args)
 	{

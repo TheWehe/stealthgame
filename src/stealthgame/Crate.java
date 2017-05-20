@@ -1,5 +1,4 @@
-// TODO: sprite für kiste erstellen und mit spritegameobject einbauen
-// TODO: beliebig große kisten als hindernisse erlauben
+// TODO: crate klasse verallgemeinern und als obstacle darstellen, abhängig von sprite und größe
 
 package stealthgame;
 

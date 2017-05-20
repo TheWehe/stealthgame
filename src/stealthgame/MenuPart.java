@@ -12,7 +12,6 @@ public abstract class MenuPart {
 	
 
 	public MenuPart(String name, Vector2f pos, Shape hitbox) {
-		// TODO Auto-generated constructor stub
 		this.name = name;
 		
 		this.pos = new Vector2f();

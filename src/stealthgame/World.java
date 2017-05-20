@@ -1,5 +1,3 @@
-// TODO: raycast-funktion die liste mit getroffenen gos zurückgibt (sortiert nach abstand zum startpunkt)
-
 package stealthgame;
 
 import java.util.ArrayList;
