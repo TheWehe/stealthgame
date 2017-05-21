@@ -12,6 +12,7 @@ public class GameState_MainMenu extends BasicGameState implements MenuListener {
 	public static final int ID = 0;
 	private Main game;
 
+	private GameContainer container;
 	private Menu menu;
 
 	public GameState_MainMenu(Main game) {
@@ -21,16 +22,22 @@ public class GameState_MainMenu extends BasicGameState implements MenuListener {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException
 	{
+		container = gc;
+		
 		menu = new Menu(this);
-		menu.add(new Button("Play", new Vector2f(300, 500), ImageManager.getInstance().get("/assets/button1.png")));
+		menu.add(new Button("Spielen", new Vector2f(125, 550), ImageManager.getInstance().get("/assets/button1.png")));
+		menu.add(new Button("Verlassen", new Vector2f(625, 550), ImageManager.getInstance().get("/assets/button1.png")));
 	}
 	
 	@Override
 	public void buttonPressed(String name) {
 		switch(name)
 		{
-		case "Play":
+		case "Spielen":
 			game.enterState(GameState_InGame.ID);
+			break;
+		case "Verlassen":
+			container.exit();
 			break;
 		}
 	}
@@ -54,7 +61,7 @@ public class GameState_MainMenu extends BasicGameState implements MenuListener {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
 	{
-		g.setBackground(Color.white);
+		g.setBackground(new Color(10, 215, 66));
 		
 		menu.render(g);
 	}

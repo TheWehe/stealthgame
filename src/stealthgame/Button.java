@@ -48,5 +48,11 @@ public class Button extends MenuPart {
 		{
 			gfx.drawImage(image, super.getPosition().x, super.getPosition().y);
 		}
+		
+		float xOffset = gfx.getFont().getWidth(getName()) / 2;
+		float x = super.getPosition().x + image.getWidth() / 2 - xOffset;
+		float yOffset = gfx.getFont().getHeight(getName()) / 2;
+		float y = super.getPosition().y + image.getHeight() / 2 - yOffset;
+		gfx.drawString(getName(), x, y);
 	}
 }
