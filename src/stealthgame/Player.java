@@ -1,17 +1,14 @@
 package stealthgame;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Player extends SpriteGameObject {
 	private float movementSpeed = 200;
 	private Vector2f velocity;
 	
-	public Player(String name, Vector2f pos, Image img) throws SlickException {
-		super(name, true, pos, 0, img);
+	public Player(String name, Vector2f pos) {
+		super(name, true, pos, 0, ImageManager.getInstance().get("/assets/Mexikaner.png"));
 		super.aabb = new AABB(super.position, new Vector2f(30, 30));
-		
 		velocity = new Vector2f();
 	}
 	

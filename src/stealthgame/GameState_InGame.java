@@ -1,9 +1,9 @@
 package stealthgame;
 
+import java.util.ArrayList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
@@ -14,7 +14,6 @@ public class GameState_InGame extends BasicGameState {
 	public static final int ID = 1;
 	
 	private Input input;
-	private Image playerImage;
 	private World world;
 	private Player player;
 
@@ -27,8 +26,6 @@ public class GameState_InGame extends BasicGameState {
 	{
 		input = gc.getInput();
 		
-		playerImage = new Image("/assets/Mexikaner.png");
-		
 		world = new World();
 		
 		Crate crate1 = new Crate("Crate1", new Vector2f(300, 300), new Vector2f(400, 400));
@@ -36,25 +33,27 @@ public class GameState_InGame extends BasicGameState {
 		Crate crate2 = new Crate("Crate2", new Vector2f(900, 550), new Vector2f(100, 150));
 		world.addGameObject(crate2);
 		
-		player = new Player("Player", new Vector2f(800, 300), playerImage);
+		player = new Player("Player", new Vector2f(800, 300));
 		world.addGameObject(player);
 		
-		Route route1 = new Route(1, false);
-		route1.addPoint(new Vector2f(550, 550));
-		route1.addPoint(new Vector2f(550, 50));
-		route1.addPoint(new Vector2f(50, 50));
-		route1.addPoint(new Vector2f(50, 550));
-		Guard guard1 = new Guard("Guard1", new Vector2f(900, 740), route1);
+		ArrayList<Vector2f> guard1RoutePoints = new ArrayList<Vector2f>();
+		guard1RoutePoints.add(new Vector2f(550, 550));
+		guard1RoutePoints.add(new Vector2f(550, 50));
+		guard1RoutePoints.add(new Vector2f(50, 50));
+		guard1RoutePoints.add(new Vector2f(50, 550));
+		Guard guard1 = new Guard("Guard1", new Vector2f(900, 740), new Route(guard1RoutePoints, 1, false));
 		world.addGameObject(guard1);
 		
-		Route route2 = new Route(1, true);
-		route2.addPoint(new Vector2f(125, 100));
-		route2.addPoint(new Vector2f(850, 100));
-		route2.addPoint(new Vector2f(100, 530));
-		route2.addPoint(new Vector2f(790, 600));
-		route2.addPoint(new Vector2f(440, 350));
-		Spotlight spotlight1 = new Spotlight("Spotloght1", new Vector2f(500, 350), route2);
+		ArrayList<Vector2f> spotlightRoutePoints = new ArrayList<Vector2f>();
+		spotlightRoutePoints.add(new Vector2f(125, 100));
+		spotlightRoutePoints.add(new Vector2f(850, 100));
+		spotlightRoutePoints.add(new Vector2f(100, 530));
+		spotlightRoutePoints.add(new Vector2f(790, 600));
+		spotlightRoutePoints.add(new Vector2f(440, 350));
+		Spotlight spotlight1 = new Spotlight("Spotlight1", new Vector2f(500, 350), new Route(spotlightRoutePoints, 2, true));
 		world.addGameObject(spotlight1);
+		Spotlight spotlight2 = new Spotlight("Spotlight2", new Vector2f(350, 500), new Route(spotlightRoutePoints, 2, true));
+		world.addGameObject(spotlight2);
 		
 		world.start();
 		world.setDebugMode(true);
@@ -63,7 +62,7 @@ public class GameState_InGame extends BasicGameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
 	{	
-		g.setBackground(Color.white);
+		g.setBackground(Color.lightGray);
 		
 		world.render(g);
 		
@@ -79,7 +78,7 @@ public class GameState_InGame extends BasicGameState {
 		if(input.isKeyDown(Input.KEY_S)) player.moveDown();
 		if(input.isKeyDown(Input.KEY_D)) player.moveRight();
 		
-		world.update((float)arg2 / 1000.f);
+		world.update(arg2 / 1000.f);
 		world.postUpdate();
 	}
 	

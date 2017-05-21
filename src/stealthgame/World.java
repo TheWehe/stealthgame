@@ -177,14 +177,19 @@ public class World {
 		}
 		
 		RaycastResult r = new RaycastResult(ray, hits);
-		/*
+		
 		Collections.sort(r.hits, new Comparator<RaycastHit>() {
+			private MathUtil.Ray ray;
+			public Comparator<RaycastHit> passParam(MathUtil.Ray r)
+			{
+				ray = r;
+				return this;
+			}
 		    @Override
 		    public int compare(RaycastHit o1, RaycastHit o2) {
 		        return (int)ray.pos.distanceSquared(o1.pos) - (int)ray.pos.distanceSquared(o2.pos);
 		    }
-		});
-		*/
+		}.passParam(ray));
 		
 		if(debugMode)
 		{

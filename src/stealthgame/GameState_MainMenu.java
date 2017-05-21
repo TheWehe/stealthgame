@@ -14,7 +14,6 @@ public class GameState_MainMenu extends BasicGameState implements MenuListener {
 	private Main game;
 
 	private Menu menu;
-	private Image buttonImage;
 
 	public GameState_MainMenu(Main game) {
 		this.game = game;
@@ -23,10 +22,8 @@ public class GameState_MainMenu extends BasicGameState implements MenuListener {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException
 	{
-		buttonImage = new Image("/assets/button1.png");
-		
 		menu = new Menu(this);
-		menu.add(new Button("Play", new Vector2f(300, 500), buttonImage));
+		menu.add(new Button("Play", new Vector2f(300, 500), ImageManager.getInstance().get("/assets/button1.png")));
 	}
 	
 	@Override

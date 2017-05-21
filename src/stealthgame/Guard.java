@@ -9,8 +9,8 @@ import org.newdawn.slick.geom.Vector2f;
 
 public class Guard extends GameObject {
 	private float movementSpeed = 100;
-	private float viewConeDegrees = 80;
-	private float viewConeLength = 150;
+	private float viewConeDegrees = 100;
+	private float viewConeLength = 300;
 	private Route route;
 	private ViewCone viewCone;
 	private Player player;
@@ -70,6 +70,6 @@ public class Guard extends GameObject {
 		gfx.setColor(Color.green);
 		gfx.fill(s);
 		
-		DebugRenderer.renderRay(gfx, new MathUtil.Ray(super.getPosition(), super.getDirection(), 100));
+		DebugRenderer.renderRay(gfx, new MathUtil.Ray(super.getPosition(), super.getDirection(), viewConeLength));
 	}
 }
